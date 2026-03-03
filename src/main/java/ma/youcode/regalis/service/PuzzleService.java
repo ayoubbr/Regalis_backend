@@ -16,5 +16,5 @@ public interface PuzzleService {
 
     void deletePuzzle(Long id);
 
-    boolean verifySolution(Long puzzleId, String submittedMoves);
+    boolean verifySolution(Long puzzleId, StringBuilder submittedMoves);
 }

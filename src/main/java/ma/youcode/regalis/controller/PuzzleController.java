@@ -56,8 +56,13 @@ public class PuzzleController {
     @PostMapping("/{id}/verify")
     @Operation(summary = "Verify puzzle solution")
     public ResponseEntity<Map<String, Boolean>> verifySolution(@PathVariable Long id,
-            @RequestBody Map<String, String> body) {
-        String submittedMoves = body.get("moves");
+                                                               @RequestBody Map<String, String> body) {
+        StringBuilder submittedMoves = new StringBuilder();
+        submittedMoves.append(body.getOrDefault("additionalProp1", ""));
+        submittedMoves.append(" ");
+        submittedMoves.append(body.getOrDefault("additionalProp2", ""));
+        submittedMoves.append(" ");
+        submittedMoves.append(body.getOrDefault("additionalProp3", ""));
         boolean isCorrect = puzzleService.verifySolution(id, submittedMoves);
         return ResponseEntity.ok(Map.of("correct", isCorrect));
     }

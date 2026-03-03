@@ -80,7 +80,7 @@ public class PuzzleServiceImpl implements PuzzleService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean verifySolution(Long puzzleId, String submittedMoves) {
+    public boolean verifySolution(Long puzzleId, StringBuilder submittedMoves) {
         Puzzle puzzle = puzzleRepository.findById(puzzleId)
                 .orElseThrow(() -> new EntityNotFoundException("Puzzle not found with id: " + puzzleId));
 
@@ -88,7 +88,7 @@ public class PuzzleServiceImpl implements PuzzleService {
 
         // Normalize moves for comparison (remove extra spaces, convert to lowercase)
         String[] correctMoveArray = normalizeMoves(correctSolution);
-        String[] submittedMoveArray = normalizeMoves(submittedMoves);
+        String[] submittedMoveArray = normalizeMoves(submittedMoves.toString());
 
         // Check if the submitted moves match the solution sequence
         if (correctMoveArray.length != submittedMoveArray.length) {
@@ -96,7 +96,7 @@ public class PuzzleServiceImpl implements PuzzleService {
         }
 
         for (int i = 0; i < correctMoveArray.length; i++) {
-            if (!correctMoveArray[i].equals(submittedMoveArray[i])) {
+            if (correctMoveArray[i].equals(submittedMoveArray[i])) {
                 return false;
             }
         }
