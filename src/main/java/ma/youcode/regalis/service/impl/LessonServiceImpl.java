@@ -54,6 +54,14 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<LessonResponseDTO> getAllLessons() {
+        return lessonRepository.findAll().stream()
+                .map(lessonMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public LessonResponseDTO updateLesson(Long id, LessonUpdateDTO dto) {
         Lesson lesson = lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found with id: " + id));

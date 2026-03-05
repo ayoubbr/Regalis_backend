@@ -39,6 +39,12 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.getLessonsByModuleId(moduleId));
     }
 
+    @GetMapping
+    @Operation(summary = "Get all lessons")
+    public ResponseEntity<List<LessonResponseDTO>> getAllLessons() {
+        return ResponseEntity.ok(lessonService.getAllLessons());
+    }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update lesson")
     public ResponseEntity<LessonResponseDTO> updateLesson(@PathVariable Long id, @RequestBody LessonUpdateDTO dto) {

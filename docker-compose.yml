@@ -26,7 +26,7 @@ services:
       PMA_USER: root
       PMA_PASSWORD: root
     ports:
-      - "9999:80"
+      - "8081:80"
     networks:
       - regalis_network
 

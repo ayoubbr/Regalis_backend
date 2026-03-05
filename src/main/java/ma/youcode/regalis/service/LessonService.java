@@ -12,6 +12,8 @@ public interface LessonService {
 
     List<LessonResponseDTO> getLessonsByModuleId(Long moduleId);
 
+    List<LessonResponseDTO> getAllLessons();
+
     LessonResponseDTO updateLesson(Long id, LessonUpdateDTO dto);
 
     void deleteLesson(Long id);
