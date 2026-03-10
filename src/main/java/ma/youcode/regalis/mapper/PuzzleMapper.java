@@ -9,14 +9,21 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface PuzzleMapper {
     @Mapping(target = "module", ignore = true)
+    @Mapping(target = "category", ignore = true)
     @Mapping(target = "puzzleAttempts", ignore = true)
     @Mapping(target = "dailyChallenges", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Puzzle toEntity(PuzzleCreateDTO dto);
 
     @Mapping(source = "module.id", target = "moduleId")
+    @Mapping(source = "category.id", target = "categoryId")
     PuzzleResponseDTO toDTO(Puzzle entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "module", ignore = true)
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "puzzleAttempts", ignore = true)
+    @Mapping(target = "dailyChallenges", ignore = true)
     void updateEntityFromDTO(PuzzleUpdateDTO dto, @MappingTarget Puzzle entity);
 }

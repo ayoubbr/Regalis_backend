@@ -34,6 +34,12 @@ public class PuzzleController {
         return ResponseEntity.ok(puzzleService.getPuzzleById(id));
     }
 
+    @GetMapping
+    @Operation(summary = "Get all puzzles")
+    public ResponseEntity<List<PuzzleResponseDTO>> getAllPuzzles() {
+        return ResponseEntity.ok(puzzleService.getAllPuzzles());
+    }
+
     @GetMapping("/module/{moduleId}")
     @Operation(summary = "Get puzzles by module ID")
     public ResponseEntity<List<PuzzleResponseDTO>> getPuzzlesByModule(@PathVariable Long moduleId) {
@@ -56,7 +62,7 @@ public class PuzzleController {
     @PostMapping("/{id}/verify")
     @Operation(summary = "Verify puzzle solution")
     public ResponseEntity<Map<String, Boolean>> verifySolution(@PathVariable Long id,
-                                                               @RequestBody Map<String, String> body) {
+            @RequestBody Map<String, String> body) {
         StringBuilder submittedMoves = new StringBuilder();
         submittedMoves.append(body.getOrDefault("additionalProp1", ""));
         submittedMoves.append(" ");

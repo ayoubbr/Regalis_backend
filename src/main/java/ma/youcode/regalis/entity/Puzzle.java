@@ -37,6 +37,10 @@ public class Puzzle {
     @JoinColumn(name = "module_id")
     private Module module;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
     private List<UserPuzzleAttempt> puzzleAttempts;
 

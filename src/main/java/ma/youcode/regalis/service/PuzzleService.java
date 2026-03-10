@@ -10,6 +10,8 @@ public interface PuzzleService {
 
     PuzzleResponseDTO getPuzzleById(Long id);
 
+    List<PuzzleResponseDTO> getAllPuzzles();
+
     List<PuzzleResponseDTO> getPuzzlesByModuleId(Long moduleId);
 
     PuzzleResponseDTO updatePuzzle(Long id, PuzzleUpdateDTO dto);
