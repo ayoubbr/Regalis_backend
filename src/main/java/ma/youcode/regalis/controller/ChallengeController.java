@@ -45,4 +45,17 @@ public class ChallengeController {
     public ResponseEntity<List<ChallengeResponseDTO>> getChallengesForUser(@PathVariable Long userId) {
         return ResponseEntity.ok(challengeService.getChallengesForUser(userId));
     }
+
+    @GetMapping
+    @Operation(summary = "Get all challenges (Admin)")
+    public ResponseEntity<List<ChallengeResponseDTO>> getAllChallenges() {
+        return ResponseEntity.ok(challengeService.getAllChallenges());
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete challenge (Admin)")
+    public ResponseEntity<Void> deleteChallenge(@PathVariable Long id) {
+        challengeService.deleteChallenge(id);
+        return ResponseEntity.noContent().build();
+    }
 }

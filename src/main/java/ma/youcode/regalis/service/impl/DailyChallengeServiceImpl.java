@@ -72,4 +72,20 @@ public class DailyChallengeServiceImpl implements DailyChallengeService {
                 .map(dailyChallengeMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DailyChallengeResponseDTO> getAllDailyChallenges() {
+        return dailyChallengeRepository.findAll().stream()
+                .map(dailyChallengeMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteDailyChallenge(Long id) {
+        if (!dailyChallengeRepository.existsById(id)) {
+            throw new EntityNotFoundException("DailyChallenge not found with id: " + id);
+        }
+        dailyChallengeRepository.deleteById(id);
+    }
 }

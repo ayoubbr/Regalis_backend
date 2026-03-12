@@ -76,4 +76,20 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .map(challengeMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ChallengeResponseDTO> getAllChallenges() {
+        return challengeRepository.findAll().stream()
+                .map(challengeMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteChallenge(Long id) {
+        if (!challengeRepository.existsById(id)) {
+            throw new EntityNotFoundException("Challenge not found with id: " + id);
+        }
+        challengeRepository.deleteById(id);
+    }
 }

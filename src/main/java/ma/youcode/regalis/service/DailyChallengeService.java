@@ -14,4 +14,8 @@ public interface DailyChallengeService {
     DailyChallengeResponseDTO markChallengeCompleted(Long id, DailyChallengeUpdateDTO dto);
 
     List<DailyChallengeResponseDTO> getUserChallengeHistory(Long userId);
+
+    List<DailyChallengeResponseDTO> getAllDailyChallenges();
+
+    void deleteDailyChallenge(Long id);
 }

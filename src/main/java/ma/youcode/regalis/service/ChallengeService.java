@@ -13,4 +13,8 @@ public interface ChallengeService {
     ChallengeResponseDTO updateChallengeStatus(Long id, ChallengeUpdateDTO dto);
 
     List<ChallengeResponseDTO> getChallengesForUser(Long userId);
+
+    List<ChallengeResponseDTO> getAllChallenges();
+
+    void deleteChallenge(Long id);
 }

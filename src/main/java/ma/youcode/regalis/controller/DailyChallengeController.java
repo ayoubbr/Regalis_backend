@@ -53,4 +53,17 @@ public class DailyChallengeController {
     public ResponseEntity<List<DailyChallengeResponseDTO>> getChallengeHistory(@PathVariable Long userId) {
         return ResponseEntity.ok(dailyChallengeService.getUserChallengeHistory(userId));
     }
+
+    @GetMapping
+    @Operation(summary = "Get all daily challenges (Admin)")
+    public ResponseEntity<List<DailyChallengeResponseDTO>> getAllDailyChallenges() {
+        return ResponseEntity.ok(dailyChallengeService.getAllDailyChallenges());
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete daily challenge (Admin)")
+    public ResponseEntity<Void> deleteDailyChallenge(@PathVariable Long id) {
+        dailyChallengeService.deleteDailyChallenge(id);
+        return ResponseEntity.noContent().build();
+    }
 }
