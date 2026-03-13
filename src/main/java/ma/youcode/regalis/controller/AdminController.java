@@ -3,6 +3,7 @@ package ma.youcode.regalis.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import ma.youcode.regalis.dto.admin.DashboardStatsDTO;
 import ma.youcode.regalis.dto.adminnote.AdminNoteCreateDTO;
 import ma.youcode.regalis.dto.adminnote.AdminNoteResponseDTO;
 import ma.youcode.regalis.service.AdminService;
@@ -19,6 +20,12 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+
+    @GetMapping("/stats")
+    @Operation(summary = "Get dashboard statistics")
+    public ResponseEntity<DashboardStatsDTO> getDashboardStats() {
+        return ResponseEntity.ok(adminService.getDashboardStats());
+    }
 
     @PostMapping("/notes")
     @Operation(summary = "Create an admin note for a user")

@@ -14,4 +14,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+    
+    @org.springframework.data.jpa.repository.Query("SELECT COALESCE(SUM(u.totalXp), 0) FROM User u")
+    Long sumTotalXp();
+
+    long countByLastActiveDateGreaterThanEqual(java.time.LocalDate date);
+
+    java.util.List<User> findTop5ByOrderByCreatedAtDesc();
 }

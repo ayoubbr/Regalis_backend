@@ -1,5 +1,6 @@
 package ma.youcode.regalis.service;
 
+import ma.youcode.regalis.dto.admin.DashboardStatsDTO;
 import ma.youcode.regalis.dto.adminnote.AdminNoteCreateDTO;
 import ma.youcode.regalis.dto.adminnote.AdminNoteResponseDTO;
 import java.util.List;
@@ -10,4 +11,6 @@ public interface AdminService {
     List<AdminNoteResponseDTO> getNotesForUser(Long userId);
 
     List<AdminNoteResponseDTO> getAllNotes();
+
+    DashboardStatsDTO getDashboardStats();
 }
