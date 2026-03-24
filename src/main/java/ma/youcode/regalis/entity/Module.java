@@ -23,6 +23,7 @@ public class Module {
     private String name;
 
     private String description;
+    private String imageUrl;
 
     @Column(name = "order_index")
     private Integer orderIndex;

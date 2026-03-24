@@ -28,6 +28,8 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    private String imageUrl;
+
     @Column(nullable = false, unique = true)
     private String username;
 

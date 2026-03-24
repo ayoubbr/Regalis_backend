@@ -11,6 +11,7 @@ public record UserResponseDTO(
                 String firstName,
                 String lastName,
                 Role role,
+                String imageUrl,
                 Integer totalXp,
                 Integer level,
                 Integer currentStreak,

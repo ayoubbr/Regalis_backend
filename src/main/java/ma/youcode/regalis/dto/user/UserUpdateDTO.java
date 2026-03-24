@@ -7,5 +7,6 @@ public record UserUpdateDTO(
                 String password,
                 String firstName,
                 String lastName,
-                Role role) {
+                Role role,
+                String imageUrl) {
 }

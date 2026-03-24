@@ -51,6 +51,12 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(id, dto));
     }
 
+    @GetMapping("/me")
+    @Operation(summary = "Get current authenticated user's profile")
+    public ResponseEntity<UserResponseDTO> getCurrentUser() {
+        return ResponseEntity.ok(userService.getCurrentUser());
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete user")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

@@ -4,5 +4,8 @@ public record ModuleResponseDTO(
         Long id,
         String name,
         String description,
-        Integer orderIndex) {
+        Integer orderIndex,
+        String imageUrl,
+        long lessonCount,
+        long puzzleCount) {
 }
