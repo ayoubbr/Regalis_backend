@@ -22,6 +22,12 @@ public class Puzzle {
     @Column(name = "fen_position", nullable = false)
     private String fenPosition;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @Column(name = "solution_moves", nullable = false)
     private String solutionMoves;
 
@@ -37,12 +43,11 @@ public class Puzzle {
     @JoinColumn(name = "module_id")
     private Module module;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
+    private List<UserPuzzle> puzzleAttempts;
 
     @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
-    private List<UserPuzzleAttempt> puzzleAttempts;
+    private List<Situation> situations;
 
     @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
     private List<DailyChallenge> dailyChallenges;

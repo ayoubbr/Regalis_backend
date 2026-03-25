@@ -8,12 +8,12 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_puzzle_attempts")
+@Table(name = "user_puzzles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserPuzzleAttempt {
+public class UserPuzzle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

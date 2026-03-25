@@ -1,6 +1,6 @@
-package ma.youcode.regalis.dto.userpuzzleattempt;
+package ma.youcode.regalis.dto.userpuzzle;
 
-public record UserPuzzleAttemptCreateDTO(
+public record UserPuzzleCreateDTO(
         Long userId,
         Long puzzleId,
         Integer attemptsCount,

@@ -8,7 +8,6 @@ import ma.youcode.regalis.entity.Module;
 import ma.youcode.regalis.entity.Puzzle;
 import ma.youcode.regalis.exception.EntityNotFoundException;
 import ma.youcode.regalis.mapper.PuzzleMapper;
-import ma.youcode.regalis.repository.CategoryRepository;
 import ma.youcode.regalis.repository.ModuleRepository;
 import ma.youcode.regalis.repository.PuzzleRepository;
 import ma.youcode.regalis.service.PuzzleService;
@@ -26,7 +25,6 @@ public class PuzzleServiceImpl implements PuzzleService {
 
     private final PuzzleRepository puzzleRepository;
     private final ModuleRepository moduleRepository;
-    private final CategoryRepository categoryRepository;
     private final PuzzleMapper puzzleMapper;
 
     @Override
@@ -36,12 +34,6 @@ public class PuzzleServiceImpl implements PuzzleService {
 
         Puzzle puzzle = puzzleMapper.toEntity(dto);
         puzzle.setModule(module);
-
-        if (dto.categoryId() != null) {
-            ma.youcode.regalis.entity.Category category = categoryRepository.findById(dto.categoryId())
-                    .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + dto.categoryId()));
-            puzzle.setCategory(category);
-        }
 
         Puzzle savedPuzzle = puzzleRepository.save(puzzle);
         return puzzleMapper.toDTO(savedPuzzle);
@@ -80,15 +72,6 @@ public class PuzzleServiceImpl implements PuzzleService {
             Module newModule = moduleRepository.findById(dto.moduleId())
                     .orElseThrow(() -> new EntityNotFoundException("Module not found with id: " + dto.moduleId()));
             puzzle.setModule(newModule);
-        }
-
-        if (dto.categoryId() != null) {
-            if (puzzle.getCategory() == null || !dto.categoryId().equals(puzzle.getCategory().getId())) {
-                ma.youcode.regalis.entity.Category newCategory = categoryRepository.findById(dto.categoryId())
-                        .orElseThrow(
-                                () -> new EntityNotFoundException("Category not found with id: " + dto.categoryId()));
-                puzzle.setCategory(newCategory);
-            }
         }
 
         puzzleMapper.updateEntityFromDTO(dto, puzzle);
