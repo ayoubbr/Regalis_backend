@@ -116,7 +116,7 @@ public class AchievementServiceImpl implements AchievementService {
         return switch (type) {
             case STREAK -> user.getCurrentStreak() != null && user.getCurrentStreak() >= value;
             case XP -> user.getTotalXp() != null && user.getTotalXp() >= value;
-            case PUZZLES_SOLVED -> false; // Would need to count from UserPuzzleAttempt - simplified for now
+            case PUZZLES_SOLVED -> false; // Would need to count from UserPuzzle - simplified for now
         };
     }
 }
