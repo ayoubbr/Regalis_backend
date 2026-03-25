@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ma.youcode.regalis.dto.lesson.LessonCreateDTO;
 import ma.youcode.regalis.dto.lesson.LessonResponseDTO;
 import ma.youcode.regalis.dto.lesson.LessonUpdateDTO;
-import ma.youcode.regalis.entity.Lesson;
+import ma.youcode.regalis.entity.Quiz;
 import ma.youcode.regalis.entity.Module;
 import ma.youcode.regalis.exception.EntityNotFoundException;
 import ma.youcode.regalis.mapper.LessonMapper;
@@ -31,18 +31,18 @@ public class LessonServiceImpl implements LessonService {
         Module module = moduleRepository.findById(dto.moduleId())
                 .orElseThrow(() -> new EntityNotFoundException("Module not found with id: " + dto.moduleId()));
 
-        Lesson lesson = lessonMapper.toEntity(dto);
-        lesson.setModule(module);
-        Lesson savedLesson = lessonRepository.save(lesson);
-        return lessonMapper.toDTO(savedLesson);
+        Quiz quiz = lessonMapper.toEntity(dto);
+        quiz.setModule(module);
+        Quiz savedQuiz = lessonRepository.save(quiz);
+        return lessonMapper.toDTO(savedQuiz);
     }
 
     @Override
     @Transactional(readOnly = true)
     public LessonResponseDTO getLessonById(Long id) {
-        Lesson lesson = lessonRepository.findById(id)
+        Quiz quiz = lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found with id: " + id));
-        return lessonMapper.toDTO(lesson);
+        return lessonMapper.toDTO(quiz);
     }
 
     @Override
@@ -63,18 +63,18 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public LessonResponseDTO updateLesson(Long id, LessonUpdateDTO dto) {
-        Lesson lesson = lessonRepository.findById(id)
+        Quiz quiz = lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found with id: " + id));
 
-        if (dto.moduleId() != null && !dto.moduleId().equals(lesson.getModule().getId())) {
+        if (dto.moduleId() != null && !dto.moduleId().equals(quiz.getModule().getId())) {
             Module newModule = moduleRepository.findById(dto.moduleId())
                     .orElseThrow(() -> new EntityNotFoundException("Module not found with id: " + dto.moduleId()));
-            lesson.setModule(newModule);
+            quiz.setModule(newModule);
         }
 
-        lessonMapper.updateEntityFromDTO(dto, lesson);
-        Lesson updatedLesson = lessonRepository.save(lesson);
-        return lessonMapper.toDTO(updatedLesson);
+        lessonMapper.updateEntityFromDTO(dto, quiz);
+        Quiz updatedQuiz = lessonRepository.save(quiz);
+        return lessonMapper.toDTO(updatedQuiz);
     }
 
     @Override

@@ -8,12 +8,12 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_progress")
+@Table(name = "user_lessons")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProgress {
+public class UserLesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class UserProgress {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
-    private Lesson lesson;
+    private Quiz quiz;
 
     private Boolean completed = false;
 

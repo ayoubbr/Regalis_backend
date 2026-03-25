@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "lessons")
+@Table(name = "quizes")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,5 +35,5 @@ public class Lesson {
     private Module module;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
-    private List<UserProgress> userProgresses;
+    private List<UserLesson> userLessons;
 }
