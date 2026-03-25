@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LessonRepository extends JpaRepository<Quiz, Long> {
+public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByModuleId(Long moduleId);
 }

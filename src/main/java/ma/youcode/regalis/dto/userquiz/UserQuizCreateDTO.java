@@ -1,6 +1,6 @@
 package ma.youcode.regalis.dto.userquiz;
 
-public record UserLessonCreateDTO(
+public record UserQuizCreateDTO(
         Long userId,
-        Long lessonId) {
+        Long quizId) {
 }

@@ -3,10 +3,10 @@ package ma.youcode.regalis.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import ma.youcode.regalis.dto.lesson.LessonCreateDTO;
-import ma.youcode.regalis.dto.lesson.LessonResponseDTO;
-import ma.youcode.regalis.dto.lesson.LessonUpdateDTO;
-import ma.youcode.regalis.service.LessonService;
+import ma.youcode.regalis.dto.quiz.QuizCreateDTO;
+import ma.youcode.regalis.dto.quiz.QuizResponseDTO;
+import ma.youcode.regalis.dto.quiz.QuizUpdateDTO;
+import ma.youcode.regalis.service.QuizService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,47 +14,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/lessons")
+@RequestMapping("/api/quizzes")
 @RequiredArgsConstructor
-@Tag(name = "Lessons", description = "Lesson management")
-public class LessonController {
+@Tag(name = "Quizzes", description = "Quiz management")
+public class QuizController {
 
-    private final LessonService lessonService;
+    private final QuizService quizService;
 
     @PostMapping
-    @Operation(summary = "Create a new lesson")
-    public ResponseEntity<LessonResponseDTO> createLesson(@RequestBody LessonCreateDTO dto) {
-        return new ResponseEntity<>(lessonService.createLesson(dto), HttpStatus.CREATED);
+    @Operation(summary = "Create a new quiz")
+    public ResponseEntity<QuizResponseDTO> createQuiz(@RequestBody QuizCreateDTO dto) {
+        return new ResponseEntity<>(quizService.createQuiz(dto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get lesson by ID")
-    public ResponseEntity<LessonResponseDTO> getLessonById(@PathVariable Long id) {
-        return ResponseEntity.ok(lessonService.getLessonById(id));
+    @Operation(summary = "Get quiz by ID")
+    public ResponseEntity<QuizResponseDTO> getQuizById(@PathVariable Long id) {
+        return ResponseEntity.ok(quizService.getQuizById(id));
     }
 
     @GetMapping("/module/{moduleId}")
-    @Operation(summary = "Get lessons by module ID")
-    public ResponseEntity<List<LessonResponseDTO>> getLessonsByModule(@PathVariable Long moduleId) {
-        return ResponseEntity.ok(lessonService.getLessonsByModuleId(moduleId));
+    @Operation(summary = "Get quizzes by module ID")
+    public ResponseEntity<List<QuizResponseDTO>> getQuizzesByModule(@PathVariable Long moduleId) {
+        return ResponseEntity.ok(quizService.getQuizzesByModuleId(moduleId));
     }
 
     @GetMapping
-    @Operation(summary = "Get all lessons")
-    public ResponseEntity<List<LessonResponseDTO>> getAllLessons() {
-        return ResponseEntity.ok(lessonService.getAllLessons());
+    @Operation(summary = "Get all quizzes")
+    public ResponseEntity<List<QuizResponseDTO>> getAllQuizzes() {
+        return ResponseEntity.ok(quizService.getAllQuizzes());
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update lesson")
-    public ResponseEntity<LessonResponseDTO> updateLesson(@PathVariable Long id, @RequestBody LessonUpdateDTO dto) {
-        return ResponseEntity.ok(lessonService.updateLesson(id, dto));
+    @Operation(summary = "Update quiz")
+    public ResponseEntity<QuizResponseDTO> updateQuiz(@PathVariable Long id, @RequestBody QuizUpdateDTO dto) {
+        return ResponseEntity.ok(quizService.updateQuiz(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete lesson")
-    public ResponseEntity<Void> deleteLesson(@PathVariable Long id) {
-        lessonService.deleteLesson(id);
+    @Operation(summary = "Delete quiz")
+    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+        quizService.deleteQuiz(id);
         return ResponseEntity.noContent().build();
     }
 }

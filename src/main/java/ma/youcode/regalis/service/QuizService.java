@@ -1,20 +1,20 @@
 package ma.youcode.regalis.service;
 
-import ma.youcode.regalis.dto.lesson.LessonCreateDTO;
-import ma.youcode.regalis.dto.lesson.LessonResponseDTO;
-import ma.youcode.regalis.dto.lesson.LessonUpdateDTO;
+import ma.youcode.regalis.dto.quiz.QuizCreateDTO;
+import ma.youcode.regalis.dto.quiz.QuizResponseDTO;
+import ma.youcode.regalis.dto.quiz.QuizUpdateDTO;
 import java.util.List;
 
-public interface LessonService {
-    LessonResponseDTO createLesson(LessonCreateDTO dto);
+public interface QuizService {
+    QuizResponseDTO createQuiz(QuizCreateDTO dto);
 
-    LessonResponseDTO getLessonById(Long id);
+    QuizResponseDTO getQuizById(Long id);
 
-    List<LessonResponseDTO> getLessonsByModuleId(Long moduleId);
+    List<QuizResponseDTO> getQuizzesByModuleId(Long moduleId);
 
-    List<LessonResponseDTO> getAllLessons();
+    List<QuizResponseDTO> getAllQuizzes();
 
-    LessonResponseDTO updateLesson(Long id, LessonUpdateDTO dto);
+    QuizResponseDTO updateQuiz(Long id, QuizUpdateDTO dto);
 
-    void deleteLesson(Long id);
+    void deleteQuiz(Long id);
 }

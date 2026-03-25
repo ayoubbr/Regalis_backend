@@ -8,12 +8,12 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "quizes")
+@Table(name = "quizzes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lesson {
+public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,16 @@ public class Lesson {
     @Column(name = "xp_reward")
     private Integer xpReward;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
     private Module module;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
-    private List<UserLesson> userLessons;
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    private List<Question> questions;
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    private List<UserQuiz> userQuizzes;
 }
