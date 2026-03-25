@@ -59,13 +59,13 @@ public class User {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserProgress> progress;
+    private List<UserQuiz> userQuizzes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserPuzzleAttempt> puzzleAttempts;
+    private List<UserPuzzle> userPuzzles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserAchievement> achievements;
+    private List<UserAchievement> userAchievements;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<DailyChallenge> dailyChallenges;
