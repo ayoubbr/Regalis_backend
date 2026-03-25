@@ -6,6 +6,6 @@ public record ModuleResponseDTO(
         String description,
         Integer orderIndex,
         String imageUrl,
-        long lessonCount,
+        long quizCount,
         long puzzleCount) {
 }

@@ -29,7 +29,7 @@ public class Module {
     private Integer orderIndex;
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
-    private List<Lesson> lessons;
+    private List<Quiz> quizzes;
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL)
     private List<Puzzle> puzzles;

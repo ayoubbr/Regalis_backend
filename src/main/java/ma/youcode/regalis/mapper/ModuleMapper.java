@@ -14,7 +14,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface ModuleMapper {
     Module toEntity(ModuleCreateDTO dto);
 
-    @Mapping(target = "lessonCount", expression = "java(entity.getLessons() != null ? entity.getLessons().size() : 0)")
+    @Mapping(target = "quizCount", expression = "java(entity.getQuizzes() != null ? entity.getQuizzes().size() : 0)")
     @Mapping(target = "puzzleCount", expression = "java(entity.getPuzzles() != null ? entity.getPuzzles().size() : 0)")
     ModuleResponseDTO toDTO(Module entity);
 
