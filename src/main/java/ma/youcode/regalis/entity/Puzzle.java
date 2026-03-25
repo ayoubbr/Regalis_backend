@@ -48,7 +48,4 @@ public class Puzzle {
 
     @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
     private List<Situation> situations;
-
-    @OneToMany(mappedBy = "puzzle", cascade = CascadeType.ALL)
-    private List<DailyChallenge> dailyChallenges;
 }

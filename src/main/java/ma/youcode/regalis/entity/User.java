@@ -68,17 +68,8 @@ public class User {
     private List<UserAchievement> userAchievements;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<DailyChallenge> dailyChallenges;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LeaderboardEntry> leaderboardEntries;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AdminNote> adminNotes;
-
-    @OneToMany(mappedBy = "challenger", cascade = CascadeType.ALL)
-    private List<Challenge> challengesInitiated;
-
-    @OneToMany(mappedBy = "opponent", cascade = CascadeType.ALL)
-    private List<Challenge> challengesReceived;
 }

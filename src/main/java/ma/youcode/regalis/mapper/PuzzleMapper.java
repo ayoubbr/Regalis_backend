@@ -11,7 +11,6 @@ public interface PuzzleMapper {
     @Mapping(target = "module", ignore = true)
     @Mapping(target = "puzzleAttempts", ignore = true)
     @Mapping(target = "situations", ignore = true)
-    @Mapping(target = "dailyChallenges", ignore = true)
     @Mapping(target = "id", ignore = true)
     Puzzle toEntity(PuzzleCreateDTO dto);
 
@@ -23,6 +22,5 @@ public interface PuzzleMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "situations", ignore = true)
     @Mapping(target = "puzzleAttempts", ignore = true)
-    @Mapping(target = "dailyChallenges", ignore = true)
     void updateEntityFromDTO(PuzzleUpdateDTO dto, @MappingTarget Puzzle entity);
 }
