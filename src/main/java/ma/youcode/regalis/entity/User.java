@@ -52,6 +52,9 @@ public class User {
     @Column(name = "current_streak")
     private Integer currentStreak = 0;
 
+    @Column(name = "longest_streak")
+    private Integer longestStreak = 0;
+
     @Column(name = "last_active_date")
     private LocalDate lastActiveDate;
 

@@ -9,6 +9,7 @@ import ma.youcode.regalis.service.UserSituationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -34,8 +35,8 @@ public class UserSituationServiceImpl implements UserSituationService {
                             .user(user)
                             .situation(situation)
                             .build();
-                    
-                    // Increment attempt count on UserPuzzle (Logic removed as requested - but keeping the check if UserPuzzle exists)
+
+                    // check if UserPuzzle exists
                     userPuzzleRepository.findByUserIdAndPuzzleId(userId, situation.getPuzzle().getId())
                             .orElseGet(() -> {
                                 UserPuzzle newUp = UserPuzzle.builder()
@@ -45,7 +46,7 @@ public class UserSituationServiceImpl implements UserSituationService {
                                         .build();
                                 return userPuzzleRepository.save(newUp);
                             });
-                    
+
                     return userSituationRepository.save(newUs);
                 });
 
@@ -68,7 +69,7 @@ public class UserSituationServiceImpl implements UserSituationService {
 
         userSituation.setUserMove(userMove);
         userSituation.setIsCorrect(isCorrect);
-        
+
         UserSituation saved = userSituationRepository.save(userSituation);
 
         if (isCorrect) {
@@ -97,7 +98,7 @@ public class UserSituationServiceImpl implements UserSituationService {
         if (solvedCount == allSituations.size() && !allSituations.isEmpty()) {
             UserPuzzle up = userPuzzleRepository.findByUserIdAndPuzzleId(userId, puzzle.getId())
                     .orElseThrow(() -> new EntityNotFoundException("UserPuzzle record not found"));
-            
+
             if (!up.getSolved()) {
                 up.setSolved(true);
                 userPuzzleRepository.save(up);
@@ -106,8 +107,38 @@ public class UserSituationServiceImpl implements UserSituationService {
                 user.setTotalXp((user.getTotalXp() != null ? user.getTotalXp() : 0) + puzzle.getXpReward());
                 // Level logic: 0-99 XP = Level 1, 100-199 XP = Level 2, etc. (xp / 100 + 1)
                 user.setLevel((user.getTotalXp() / 100) + 1);
+
+                updateUserStreak(user);
+
                 userRepository.save(user);
             }
         }
+    }
+
+    private void updateUserStreak(User user) {
+        LocalDate today = LocalDate.now();
+        LocalDate lastDate = user.getLastActiveDate();
+
+        if (lastDate == null) {
+            // First time
+            user.setCurrentStreak(1);
+        } else if (lastDate.equals(today)) {
+            // Already solved something today, do nothing to currentStreak
+            return;
+        } else if (lastDate.plusDays(1).equals(today)) {
+            // Yesterday -> today, streak continues
+            user.setCurrentStreak((user.getCurrentStreak() != null ? user.getCurrentStreak() : 0) + 1);
+        } else {
+            // Streak broken (gap of more than 1 day)
+            user.setCurrentStreak(1);
+        }
+
+        // Update longest streak if necessary
+        if (user.getCurrentStreak() > (user.getLongestStreak() != null ? user.getLongestStreak() : 0)) {
+            user.setLongestStreak(user.getCurrentStreak());
+        }
+
+        // Always update last active date
+        user.setLastActiveDate(today);
     }
 }

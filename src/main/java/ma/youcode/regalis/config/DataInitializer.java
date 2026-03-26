@@ -56,7 +56,6 @@ public class DataInitializer implements CommandLineRunner {
         player1.setTotalXp(0);
         player1.setLevel(1);
         player1.setCurrentStreak(0);
-        player1.setLastActiveDate(LocalDate.now());
         player1.setImageUrl("https://cdn-icons-png.flaticon.com/128/1999/1999625.png");
         userRepository.save(player1);
 
@@ -70,7 +69,6 @@ public class DataInitializer implements CommandLineRunner {
         player2.setTotalXp(0);
         player2.setLevel(1);
         player2.setCurrentStreak(0);
-        player2.setLastActiveDate(LocalDate.now());
         player2.setImageUrl("https://cdn-icons-png.flaticon.com/128/201/201634.png");
         userRepository.save(player2);
 
