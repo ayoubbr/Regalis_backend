@@ -32,10 +32,6 @@ public class UserSituation {
     private Boolean isCorrect;
 
     @Builder.Default
-    @Column(nullable = false)
-    private Boolean completed = false;
-
-    @Builder.Default
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }

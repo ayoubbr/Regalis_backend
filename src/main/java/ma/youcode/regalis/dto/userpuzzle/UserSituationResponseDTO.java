@@ -5,6 +5,5 @@ public record UserSituationResponseDTO(
         Long userId,
         Long situationId,
         String userMove,
-        Boolean isCorrect,
-        Boolean completed) {
+        Boolean isCorrect) {
 }

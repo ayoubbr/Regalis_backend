@@ -33,19 +33,18 @@ public class UserSituationServiceImpl implements UserSituationService {
                     UserSituation newUs = UserSituation.builder()
                             .user(user)
                             .situation(situation)
-                            .completed(false)
                             .build();
                     
-                    // Increment attempt count on UserPuzzle whenever a new situation is opened
-                    UserPuzzle up = userPuzzleRepository.findByUserIdAndPuzzleId(userId, situation.getPuzzle().getId())
-                            .orElseGet(() -> UserPuzzle.builder()
-                                    .user(user)
-                                    .puzzle(situation.getPuzzle())
-                                    .attemptsCount(0)
-                                    .solved(false)
-                                    .build());
-                    up.setAttemptsCount(up.getAttemptsCount() + 1);
-                    userPuzzleRepository.save(up);
+                    // Increment attempt count on UserPuzzle (Logic removed as requested - but keeping the check if UserPuzzle exists)
+                    userPuzzleRepository.findByUserIdAndPuzzleId(userId, situation.getPuzzle().getId())
+                            .orElseGet(() -> {
+                                UserPuzzle newUp = UserPuzzle.builder()
+                                        .user(user)
+                                        .puzzle(situation.getPuzzle())
+                                        .solved(false)
+                                        .build();
+                                return userPuzzleRepository.save(newUp);
+                            });
                     
                     return userSituationRepository.save(newUs);
                 });
@@ -55,8 +54,7 @@ public class UserSituationServiceImpl implements UserSituationService {
                 userSituation.getUser().getId(),
                 userSituation.getSituation().getId(),
                 userSituation.getUserMove(),
-                userSituation.getIsCorrect(),
-                userSituation.getCompleted()
+                userSituation.getIsCorrect()
         );
     }
 
@@ -70,7 +68,6 @@ public class UserSituationServiceImpl implements UserSituationService {
 
         userSituation.setUserMove(userMove);
         userSituation.setIsCorrect(isCorrect);
-        userSituation.setCompleted(isCorrect);
         
         UserSituation saved = userSituationRepository.save(userSituation);
 
@@ -83,8 +80,7 @@ public class UserSituationServiceImpl implements UserSituationService {
                 saved.getUser().getId(),
                 saved.getSituation().getId(),
                 saved.getUserMove(),
-                saved.getIsCorrect(),
-                saved.getCompleted()
+                saved.getIsCorrect()
         );
     }
 

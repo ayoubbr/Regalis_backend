@@ -26,10 +26,6 @@ public class UserPuzzle {
     private Puzzle puzzle;
 
     @Builder.Default
-    @Column(name = "attempts_count")
-    private Integer attemptsCount = 0;
-
-    @Builder.Default
     private Boolean solved = false;
 
     @Builder.Default
