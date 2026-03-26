@@ -15,7 +15,6 @@ import ma.youcode.regalis.service.UserPuzzleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,6 @@ public class UserPuzzleServiceImpl implements UserPuzzleService {
         UserPuzzle attempt = userPuzzleMapper.toEntity(dto);
         attempt.setUser(user);
         attempt.setPuzzle(puzzle);
-        attempt.setAttemptDate(LocalDateTime.now());
 
         UserPuzzle savedAttempt = userPuzzleRepository.save(attempt);
         return userPuzzleMapper.toDTO(savedAttempt);

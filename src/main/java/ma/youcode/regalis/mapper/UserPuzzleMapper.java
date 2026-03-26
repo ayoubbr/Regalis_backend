@@ -9,7 +9,6 @@ import org.mapstruct.*;
 public interface UserPuzzleMapper {
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "puzzle", ignore = true)
-    @Mapping(target = "attemptDate", ignore = true)
     UserPuzzle toEntity(UserPuzzleCreateDTO dto);
 
     @Mapping(source = "user.id", target = "userId")

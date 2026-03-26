@@ -14,7 +14,6 @@ import ma.youcode.regalis.service.PuzzleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,40 +86,4 @@ public class PuzzleServiceImpl implements PuzzleService {
         puzzleRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public boolean verifySolution(Long puzzleId, StringBuilder submittedMoves) {
-        Puzzle puzzle = puzzleRepository.findById(puzzleId)
-                .orElseThrow(() -> new EntityNotFoundException("Puzzle not found with id: " + puzzleId));
-
-        String correctSolution = puzzle.getSolutionMoves();
-
-        // Normalize moves for comparison (remove extra spaces, convert to lowercase)
-        String[] correctMoveArray = normalizeMoves(correctSolution);
-        String[] submittedMoveArray = normalizeMoves(submittedMoves.toString());
-
-        // Check if the submitted moves match the solution sequence
-        if (correctMoveArray.length != submittedMoveArray.length) {
-            return false;
-        }
-
-        for (int i = 0; i < correctMoveArray.length; i++) {
-            if (correctMoveArray[i].equals(submittedMoveArray[i])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private String[] normalizeMoves(String moves) {
-        if (moves == null || moves.isBlank()) {
-            return new String[0];
-        }
-        return Arrays.stream(moves.trim().split("[,\\s]+"))
-                .map(String::trim)
-                .map(String::toLowerCase)
-                .filter(s -> !s.isEmpty())
-                .toArray(String[]::new);
-    }
 }

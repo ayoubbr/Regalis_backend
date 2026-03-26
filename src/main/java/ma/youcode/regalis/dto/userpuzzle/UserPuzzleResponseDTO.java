@@ -8,7 +8,5 @@ public record UserPuzzleResponseDTO(
         Long puzzleId,
         Integer attemptsCount,
         Boolean solved,
-        Integer timeSpentSeconds,
-        String submittedMoves,
-        LocalDateTime attemptDate) {
+        LocalDateTime createdAt) {
 }

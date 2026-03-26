@@ -4,7 +4,5 @@ public record UserPuzzleCreateDTO(
         Long userId,
         Long puzzleId,
         Integer attemptsCount,
-        Boolean solved,
-        Integer timeSpentSeconds,
-        String submittedMoves) {
+        Boolean solved) {
 }

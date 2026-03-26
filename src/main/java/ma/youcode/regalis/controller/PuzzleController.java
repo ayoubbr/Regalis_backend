@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/puzzles")
@@ -59,17 +58,4 @@ public class PuzzleController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{id}/verify")
-    @Operation(summary = "Verify puzzle solution")
-    public ResponseEntity<Map<String, Boolean>> verifySolution(@PathVariable Long id,
-            @RequestBody Map<String, String> body) {
-        StringBuilder submittedMoves = new StringBuilder();
-        submittedMoves.append(body.getOrDefault("additionalProp1", ""));
-        submittedMoves.append(" ");
-        submittedMoves.append(body.getOrDefault("additionalProp2", ""));
-        submittedMoves.append(" ");
-        submittedMoves.append(body.getOrDefault("additionalProp3", ""));
-        boolean isCorrect = puzzleService.verifySolution(id, submittedMoves);
-        return ResponseEntity.ok(Map.of("correct", isCorrect));
-    }
 }

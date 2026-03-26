@@ -21,8 +21,8 @@ public class Situation {
     @Column(name = "fen_position", nullable = false)
     private String fenPosition;
 
-    @Column(name = "solution_moves", nullable = false)
-    private String solutionMoves;
+    @Column(name = "correct_move", nullable = false)
+    private String correctMove;
 
     @Column(columnDefinition = "TEXT")
     private String description;
