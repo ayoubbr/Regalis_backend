@@ -15,6 +15,7 @@ public record UserResponseDTO(
                 Integer totalXp,
                 Integer level,
                 Integer currentStreak,
+                Integer longestStreak,
                 LocalDate lastActiveDate,
                 LocalDateTime createdAt) {
 }
