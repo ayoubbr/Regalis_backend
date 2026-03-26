@@ -27,9 +27,6 @@ public class Quiz {
 
     private Integer difficulty;
 
-    @Column(name = "xp_reward")
-    private Integer xpReward;
-
     @Column(name = "image_url")
     private String imageUrl;
 

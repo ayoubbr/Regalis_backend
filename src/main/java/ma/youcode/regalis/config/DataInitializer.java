@@ -106,7 +106,6 @@ public class DataInitializer implements CommandLineRunner {
         quiz1.setTitle("Center Control");
         quiz1.setContent("Why controlling the center is important.");
         quiz1.setDifficulty(1);
-        quiz1.setXpReward(100);
         quiz1.setModule(mod1);
         quiz1.setImageUrl("https://images.unsplash.com/photo-1587888191477-e74ac6bc9c4b");
         quizRepository.save(quiz1);
@@ -127,7 +126,6 @@ public class DataInitializer implements CommandLineRunner {
         quiz2.setTitle("Piece Development");
         quiz2.setContent("Develop pieces quickly and efficiently.");
         quiz2.setDifficulty(1);
-        quiz2.setXpReward(50);
         quiz2.setModule(mod1);
         quiz2.setImageUrl("https://images.unsplash.com/photo-1619163413327-546fdb903195");
         quizRepository.save(quiz2);
@@ -136,7 +134,6 @@ public class DataInitializer implements CommandLineRunner {
         quiz3.setTitle("Pin Tactic");
         quiz3.setContent("Learn how to pin enemy pieces.");
         quiz3.setDifficulty(2);
-        quiz3.setXpReward(90);
         quiz3.setModule(mod2);
         quizRepository.save(quiz3);
 
@@ -144,7 +141,6 @@ public class DataInitializer implements CommandLineRunner {
         quiz4.setTitle("Opposition in Endgame");
         quiz4.setContent("Master king opposition.");
         quiz4.setDifficulty(3);
-        quiz4.setXpReward(120);
         quiz4.setModule(mod3);
         quizRepository.save(quiz4);
 
@@ -214,19 +210,19 @@ public class DataInitializer implements CommandLineRunner {
         achievementRepository.save(ach2);
 
         // USER QUIZ
-        UserQuiz prog1 = new UserQuiz();
-        prog1.setUser(player1);
-        prog1.setQuiz(quiz1);
-        prog1.setCompleted(true);
-        prog1.setCompletionDate(LocalDateTime.now().minusDays(5));
-        userQuizRepository.save(prog1);
-
-        UserQuiz prog2 = new UserQuiz();
-        prog2.setUser(player1);
-        prog2.setQuiz(quiz3);
-        prog2.setCompleted(true);
-        prog2.setCompletionDate(LocalDateTime.now().minusDays(3));
-        userQuizRepository.save(prog2);
+//        UserQuiz prog1 = new UserQuiz();
+//        prog1.setUser(player1);
+//        prog1.setQuiz(quiz1);
+//        prog1.setCompleted(true);
+//        prog1.setCompletionDate(LocalDateTime.now().minusDays(5));
+//        userQuizRepository.save(prog1);
+//
+//        UserQuiz prog2 = new UserQuiz();
+//        prog2.setUser(player1);
+//        prog2.setQuiz(quiz3);
+//        prog2.setCompleted(true);
+//        prog2.setCompletionDate(LocalDateTime.now().minusDays(3));
+//        userQuizRepository.save(prog2);
 
         // USER ACHIEVEMENTS
         UserAchievement uAch1 = new UserAchievement();

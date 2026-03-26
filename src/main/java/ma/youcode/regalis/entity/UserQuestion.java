@@ -5,15 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_quizzes")
+@Table(name = "user_questions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserQuiz {
+public class UserQuestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +23,12 @@ public class UserQuiz {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
+    @JoinColumn(name = "question_id")
+    private Question question;
 
-    private Boolean completed = false;
+    @Column(name = "selected_option_id")
+    private String selectedOptionId;
 
-    private Integer score = 0;
-
-    @Column(name = "completion_date")
-    private LocalDateTime completionDate;
+    @Column(name = "is_correct")
+    private Boolean isCorrect;
 }

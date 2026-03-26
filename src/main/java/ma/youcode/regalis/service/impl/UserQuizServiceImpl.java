@@ -46,17 +46,67 @@ public class UserQuizServiceImpl implements UserQuizService {
         return userQuizMapper.toDTO(savedProgress);
     }
 
+    private final ma.youcode.regalis.repository.UserQuestionRepository userQuestionRepository;
+
     @Override
     public UserQuizResponseDTO updateProgress(Long id, UserQuizUpdateDTO dto) {
         UserQuiz progress = userQuizRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("UserQuiz not found with id: " + id));
 
-        userQuizMapper.updateEntityFromDTO(dto, progress);
+        User user = progress.getUser();
+        List<ma.youcode.regalis.entity.Question> quizQuestions = progress.getQuiz().getQuestions();
+        int totalQuestions = quizQuestions.size();
+        int correctCount = 0;
+        int newScore = 0;
 
-        if (Boolean.TRUE.equals(dto.completed()) && progress.getCompletionDate() == null) {
+        if (dto.answers() != null) {
+            for (UserQuizUpdateDTO.UserAnswerDTO answerDTO : dto.answers()) {
+                ma.youcode.regalis.entity.Question question = quizQuestions.stream()
+                        .filter(q -> q.getId().equals(answerDTO.questionId()))
+                        .findFirst()
+                        .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + answerDTO.questionId()));
+
+                boolean isCorrect = question.getCorrectOptionId().equals(answerDTO.selectedOptionId());
+                
+                // Update UserQuestion record
+                ma.youcode.regalis.entity.UserQuestion userQuestion = userQuestionRepository
+                        .findByUserIdAndQuestionId(user.getId(), question.getId())
+                        .orElse(new ma.youcode.regalis.entity.UserQuestion());
+                
+                userQuestion.setUser(user);
+                userQuestion.setQuestion(question);
+                userQuestion.setSelectedOptionId(answerDTO.selectedOptionId());
+                userQuestion.setIsCorrect(isCorrect);
+                userQuestionRepository.save(userQuestion);
+
+                if (isCorrect) {
+                  newScore += (question.getXpReward() != null ? question.getXpReward() : 0);
+                  correctCount++;
+                }
+            }
+        }
+
+        // Completion logic: All answers must be correct
+        boolean isAllCorrect = (correctCount == totalQuestions);
+        progress.setCompleted(isAllCorrect);
+        
+        if (isAllCorrect && progress.getCompletionDate() == null) {
             progress.setCompletionDate(LocalDateTime.now());
         }
 
+        // Update User XP logic: (New Score - Old Score)
+        // User requested: "just the new score cause we reset"
+        // This means we always set the user's XP contribution from this quiz to the latest newScore.
+        int oldScore = progress.getScore() != null ? progress.getScore() : 0;
+        int diff = newScore - oldScore;
+        if (diff != 0) {
+            user.setTotalXp(user.getTotalXp() + diff);
+            // Re-calculate level
+            user.setLevel((user.getTotalXp() / 100) + 1);
+            userRepository.save(user);
+        }
+
+        progress.setScore(newScore);
         UserQuiz updatedProgress = userQuizRepository.save(progress);
         return userQuizMapper.toDTO(updatedProgress);
     }

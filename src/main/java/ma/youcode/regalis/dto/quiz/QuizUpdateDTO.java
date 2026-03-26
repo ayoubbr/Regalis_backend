@@ -4,7 +4,6 @@ public record QuizUpdateDTO(
         String title,
         String content,
         Integer difficulty,
-        Integer xpReward,
         Long moduleId,
         String imageUrl) {
 }

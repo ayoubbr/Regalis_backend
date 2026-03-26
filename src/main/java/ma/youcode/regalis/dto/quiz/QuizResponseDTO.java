@@ -8,7 +8,6 @@ public record QuizResponseDTO(
         String title,
         String content,
         Integer difficulty,
-        Integer xpReward,
         Long moduleId,
         String imageUrl,
         List<QuestionResponseDTO> questions) {

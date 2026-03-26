@@ -12,14 +12,19 @@ public interface UserQuizMapper {
     @Mapping(target = "quiz", ignore = true)
     @Mapping(target = "completionDate", ignore = true)
     @Mapping(target = "completed", ignore = true)
+    @Mapping(target = "score", ignore = true)
+    @Mapping(target = "id", ignore = true)
     UserQuiz toEntity(UserQuizCreateDTO dto);
 
-    @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "quiz.id", target = "quizId")
+    @Mapping(source = "quiz.title", target = "quizTitle")
     UserQuizResponseDTO toDTO(UserQuiz entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "quiz", ignore = true)
+    @Mapping(target = "score", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "completionDate", ignore = true)
     void updateEntityFromDTO(UserQuizUpdateDTO dto, @MappingTarget UserQuiz entity);
 }
