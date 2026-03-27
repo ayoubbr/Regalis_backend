@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import ma.youcode.regalis.enums.Period;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "leaderboard_entries")
@@ -26,6 +27,15 @@ public class LeaderboardEntry {
 
     @Column(name = "`rank`")
     private Integer rank;
+
+    @Column(name = "period_start")
+    private LocalDateTime periodStart;
+
+    @Column(name = "period_end")
+    private LocalDateTime periodEnd;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

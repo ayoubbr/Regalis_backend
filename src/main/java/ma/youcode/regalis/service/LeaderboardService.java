@@ -7,5 +7,7 @@ import java.util.List;
 public interface LeaderboardService {
     List<LeaderboardEntryResponseDTO> getLeaderboard(Period period);
 
-    void updateLeaderboard(Period period);
+    void refreshLeaderboard(Period period);
+
+    void refreshAll();
 }

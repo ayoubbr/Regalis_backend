@@ -7,5 +7,8 @@ public record LeaderboardEntryResponseDTO(
         Period period,
         Integer xp,
         Integer rank,
-        Long userId) {
+        Long userId,
+        String username,
+        String imageUrl,
+        Integer level) {
 }

@@ -12,6 +12,9 @@ public interface LeaderboardEntryMapper {
     LeaderboardEntry toEntity(LeaderboardEntryCreateDTO dto);
 
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.imageUrl", target = "imageUrl")
+    @Mapping(source = "user.level", target = "level")
     LeaderboardEntryResponseDTO toDTO(LeaderboardEntry entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

@@ -25,10 +25,10 @@ public class LeaderboardController {
         return ResponseEntity.ok(leaderboardService.getLeaderboard(period));
     }
 
-    @PostMapping("/{period}/update")
-    @Operation(summary = "Update/refresh leaderboard for period")
-    public ResponseEntity<Void> updateLeaderboard(@PathVariable Period period) {
-        leaderboardService.updateLeaderboard(period);
+    @PostMapping("/refresh")
+    @Operation(summary = "Force refresh all leaderboard periods")
+    public ResponseEntity<Void> refreshAll() {
+        leaderboardService.refreshAll();
         return ResponseEntity.ok().build();
     }
 }
