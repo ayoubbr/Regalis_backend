@@ -131,7 +131,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
         for (Object[] row : quizResults) {
             Long userId = (Long) row[0];
             int xp = ((Number) row[1]).intValue();
-            if (xp > 0) xpMap.merge(userId, xp, Integer::sum);
+            if (xp > 0) xpMap.merge(userId, xp, (a, b) -> a + b);
         }
 
         // Puzzle XP (correct situations — one entry per distinct puzzle)
@@ -140,7 +140,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
             Long userId = (Long) row[0];
             // row[1] = puzzleId (used for grouping, ignored here)
             int xp = ((Number) row[2]).intValue();
-            if (xp > 0) xpMap.merge(userId, xp, Integer::sum);
+            if (xp > 0) xpMap.merge(userId, xp, (a, b) -> a + b);
         }
 
         // Filter to USER role only

@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -40,9 +38,20 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all users")
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    @Operation(summary = "Get all users with pagination and filters")
+    public ResponseEntity<ma.youcode.regalis.dto.common.PaginatedResponse<UserResponseDTO>> getAllUsers(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) ma.youcode.regalis.enums.Role role,
+            org.springframework.data.domain.Pageable pageable) {
+        org.springframework.data.domain.Page<UserResponseDTO> page = userService.getAllUsers(search, role, pageable);
+        return ResponseEntity.ok(new ma.youcode.regalis.dto.common.PaginatedResponse<>(
+            page.getContent(),
+            page.getNumber(),
+            page.getSize(),
+            page.getTotalElements(),
+            page.getTotalPages(),
+            page.isLast()
+        ));
     }
 
     @PutMapping("/{id}")

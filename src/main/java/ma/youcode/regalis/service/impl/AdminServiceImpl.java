@@ -78,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 
         List<DashboardActivityDTO> recentActivities = new ArrayList<>();
         
-        userRepository.findTop5ByOrderByCreatedAtDesc().forEach(user -> {
+        userRepository.findTop8ByOrderByCreatedAtDesc().forEach(user -> {
             recentActivities.add(new DashboardActivityDTO(
                 "registration",
                 user.getUsername(),
