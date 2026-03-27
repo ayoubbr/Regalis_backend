@@ -12,6 +12,7 @@ import ma.youcode.regalis.mapper.AdminNoteMapper;
 import ma.youcode.regalis.repository.AdminNoteRepository;
 import ma.youcode.regalis.repository.ModuleRepository;
 import ma.youcode.regalis.repository.PuzzleRepository;
+import ma.youcode.regalis.repository.QuizRepository;
 import ma.youcode.regalis.repository.UserRepository;
 import ma.youcode.regalis.service.AdminService;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
     private final UserRepository userRepository;
     private final ModuleRepository moduleRepository;
     private final PuzzleRepository puzzleRepository;
+    private final QuizRepository quizRepository;
     private final AdminNoteMapper adminNoteMapper;
 
     @Override
@@ -70,11 +73,11 @@ public class AdminServiceImpl implements AdminService {
         long activeUsers = userRepository.countByLastActiveDateGreaterThanEqual(LocalDate.now().minusDays(1));
         long totalModules = moduleRepository.count();
         long totalPuzzles = puzzleRepository.count();
+        long totalQuizzes = quizRepository.count();
         Long totalXp = userRepository.sumTotalXp();
 
         List<DashboardActivityDTO> recentActivities = new ArrayList<>();
         
-        // Add recent registrations
         userRepository.findTop5ByOrderByCreatedAtDesc().forEach(user -> {
             recentActivities.add(new DashboardActivityDTO(
                 "registration",
@@ -86,16 +89,27 @@ public class AdminServiceImpl implements AdminService {
             ));
         });
 
-        // Mock some other activities if needed or fetch more real data
-        // For now, let's keep it mostly real with registrations
-        
+        // User growth: count registrations per month for the last 7 months
+        Map<String, Long> userGrowth = new LinkedHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
+        YearMonth current = YearMonth.now();
+        for (int i = 6; i >= 0; i--) {
+            YearMonth month = current.minusMonths(i);
+            LocalDateTime start = month.atDay(1).atStartOfDay();
+            LocalDateTime end = month.atEndOfMonth().atTime(23, 59, 59);
+            long count = userRepository.countByCreatedAtBetween(start, end);
+            userGrowth.put(month.format(formatter), count);
+        }
+
         return new DashboardStatsDTO(
             totalUsers,
             activeUsers,
             totalModules,
             totalPuzzles,
+            totalQuizzes,
             totalXp != null ? totalXp : 0L,
-            recentActivities
+            recentActivities,
+            userGrowth
         );
     }
 

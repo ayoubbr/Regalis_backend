@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     long countByLastActiveDateGreaterThanEqual(java.time.LocalDate date);
 
     java.util.List<User> findTop5ByOrderByCreatedAtDesc();
+
+    long countByCreatedAtBetween(java.time.LocalDateTime start, java.time.LocalDateTime end);
 }
