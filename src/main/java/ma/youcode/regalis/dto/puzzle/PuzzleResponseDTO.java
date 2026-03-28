@@ -5,6 +5,8 @@ import java.util.List;
 
 public record PuzzleResponseDTO(
                 Long id,
+                String title,
+                String description,
                 Integer difficulty,
                 Integer xpReward,
                 Long moduleId,

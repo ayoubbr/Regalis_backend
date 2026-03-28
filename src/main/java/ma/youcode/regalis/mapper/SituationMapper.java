@@ -5,7 +5,6 @@ import ma.youcode.regalis.dto.situation.SituationResponseDTO;
 import ma.youcode.regalis.dto.situation.SituationUpdateDTO;
 import ma.youcode.regalis.entity.Situation;
 import org.mapstruct.*;
-import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SituationMapper {
@@ -13,10 +12,7 @@ public interface SituationMapper {
     @Mapping(target = "id", ignore = true)
     Situation toEntity(SituationCreateDTO dto);
 
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "fenPosition", source = "fenPosition")
-    @Mapping(target = "correctMove", source = "correctMove")
-    @Mapping(target = "description", source = "description")
+    @Mapping(target = "puzzleId", source = "puzzle.id")
     SituationResponseDTO toDTO(Situation entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

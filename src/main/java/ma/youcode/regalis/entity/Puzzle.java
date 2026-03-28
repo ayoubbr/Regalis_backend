@@ -21,6 +21,12 @@ public class Puzzle {
 
     private Integer difficulty;
     
+    @Column(columnDefinition = "TEXT")
+    private String title;
+    
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    
     @Column(name = "xp_reward")
     private Integer xpReward;
 

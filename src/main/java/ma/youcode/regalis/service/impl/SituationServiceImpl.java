@@ -71,3 +71,4 @@ public class SituationServiceImpl implements SituationService {
                 .collect(Collectors.toList());
     }
 }
+

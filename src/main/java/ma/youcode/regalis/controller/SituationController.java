@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/situations")
 @RequiredArgsConstructor
+//@CrossOrigin("*")
 public class SituationController {
 
     private final SituationService situationService;

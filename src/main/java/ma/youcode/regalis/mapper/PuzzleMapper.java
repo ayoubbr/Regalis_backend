@@ -6,7 +6,7 @@ import ma.youcode.regalis.dto.puzzle.PuzzleUpdateDTO;
 import ma.youcode.regalis.entity.Puzzle;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {SituationMapper.class})
 public interface PuzzleMapper {
     @Mapping(target = "module", ignore = true)
     @Mapping(target = "puzzleAttempts", ignore = true)

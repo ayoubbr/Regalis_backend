@@ -4,5 +4,6 @@ public record SituationResponseDTO(
         Long id,
         String fenPosition,
         String correctMove,
-        String description) {
+        String description,
+        Long puzzleId) {
 }
