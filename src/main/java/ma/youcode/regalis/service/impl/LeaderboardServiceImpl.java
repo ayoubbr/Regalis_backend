@@ -142,7 +142,6 @@ public class LeaderboardServiceImpl implements LeaderboardService {
             int xp = ((Number) row[2]).intValue();
             if (xp > 0) xpMap.merge(userId, xp, (a, b) -> a + b);
         }
-
         // Filter to USER role only
         xpMap.entrySet().removeIf(entry ->
             userRepository.findById(entry.getKey())

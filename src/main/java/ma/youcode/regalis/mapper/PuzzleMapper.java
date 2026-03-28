@@ -15,6 +15,7 @@ public interface PuzzleMapper {
     Puzzle toEntity(PuzzleCreateDTO dto);
 
     @Mapping(source = "module.id", target = "moduleId")
+    @Mapping(source = "module.name", target = "moduleName")
     PuzzleResponseDTO toDTO(Puzzle entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

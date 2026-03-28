@@ -8,5 +8,6 @@ public record PuzzleResponseDTO(
                 Integer difficulty,
                 Integer xpReward,
                 Long moduleId,
+                String moduleName,
                 List<SituationResponseDTO> situations) {
 }
