@@ -1,5 +1,6 @@
 package ma.youcode.regalis.service.impl;
 
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import ma.youcode.regalis.dto.puzzle.PuzzleCreateDTO;
 import ma.youcode.regalis.dto.puzzle.PuzzleResponseDTO;
@@ -11,9 +12,13 @@ import ma.youcode.regalis.mapper.PuzzleMapper;
 import ma.youcode.regalis.repository.ModuleRepository;
 import ma.youcode.regalis.repository.PuzzleRepository;
 import ma.youcode.regalis.service.PuzzleService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +65,28 @@ public class PuzzleServiceImpl implements PuzzleService {
         return puzzleRepository.findByModuleId(moduleId).stream()
                 .map(puzzleMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PuzzleResponseDTO> getPagedPuzzles(String search, Long moduleId, Pageable pageable) {
+        return puzzleRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (search != null && !search.isBlank()) {
+                String pattern = "%" + search.toLowerCase() + "%";
+                predicates.add(cb.or(
+                    cb.like(cb.lower(root.get("title")), pattern),
+                    cb.like(cb.lower(root.get("description")), pattern)
+                ));
+            }
+
+            if (moduleId != null) {
+                predicates.add(cb.equal(root.get("module").get("id"), moduleId));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        }, pageable).map(puzzleMapper::toDTO);
     }
 
     @Override

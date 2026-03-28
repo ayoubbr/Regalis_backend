@@ -3,10 +3,14 @@ package ma.youcode.regalis.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import ma.youcode.regalis.dto.common.PaginatedResponse;
 import ma.youcode.regalis.dto.user.UserCreateDTO;
 import ma.youcode.regalis.dto.user.UserResponseDTO;
 import ma.youcode.regalis.dto.user.UserUpdateDTO;
+import ma.youcode.regalis.enums.Role;
 import ma.youcode.regalis.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +43,12 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Get all users with pagination and filters")
-    public ResponseEntity<ma.youcode.regalis.dto.common.PaginatedResponse<UserResponseDTO>> getAllUsers(
+    public ResponseEntity<PaginatedResponse<UserResponseDTO>> getAllUsers(
             @RequestParam(required = false) String search,
-            @RequestParam(required = false) ma.youcode.regalis.enums.Role role,
-            org.springframework.data.domain.Pageable pageable) {
-        org.springframework.data.domain.Page<UserResponseDTO> page = userService.getAllUsers(search, role, pageable);
-        return ResponseEntity.ok(new ma.youcode.regalis.dto.common.PaginatedResponse<>(
+            @RequestParam(required = false) Role role,
+            Pageable pageable) {
+        Page<UserResponseDTO> page = userService.getAllUsers(search, role, pageable);
+        return ResponseEntity.ok(new PaginatedResponse<>(
             page.getContent(),
             page.getNumber(),
             page.getSize(),

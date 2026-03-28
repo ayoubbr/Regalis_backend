@@ -3,10 +3,13 @@ package ma.youcode.regalis.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import ma.youcode.regalis.dto.common.PaginatedResponse;
 import ma.youcode.regalis.dto.puzzle.PuzzleCreateDTO;
 import ma.youcode.regalis.dto.puzzle.PuzzleResponseDTO;
 import ma.youcode.regalis.dto.puzzle.PuzzleUpdateDTO;
 import ma.youcode.regalis.service.PuzzleService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +46,23 @@ public class PuzzleController {
     @Operation(summary = "Get puzzles by module ID")
     public ResponseEntity<List<PuzzleResponseDTO>> getPuzzlesByModule(@PathVariable Long moduleId) {
         return ResponseEntity.ok(puzzleService.getPuzzlesByModuleId(moduleId));
+    }
+
+    @GetMapping("/paged")
+    @Operation(summary = "Get all puzzles with pagination and filters")
+    public ResponseEntity<PaginatedResponse<PuzzleResponseDTO>> getPagedPuzzles(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long moduleId,
+            Pageable pageable) {
+        Page<PuzzleResponseDTO> page = puzzleService.getPagedPuzzles(search, moduleId, pageable);
+        return ResponseEntity.ok(new PaginatedResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        ));
     }
 
     @PutMapping("/{id}")
