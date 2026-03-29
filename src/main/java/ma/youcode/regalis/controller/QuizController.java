@@ -3,10 +3,14 @@ package ma.youcode.regalis.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import ma.youcode.regalis.dto.common.PaginatedResponse;
 import ma.youcode.regalis.dto.quiz.QuizCreateDTO;
 import ma.youcode.regalis.dto.quiz.QuizResponseDTO;
 import ma.youcode.regalis.dto.quiz.QuizUpdateDTO;
 import ma.youcode.regalis.service.QuizService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +47,23 @@ public class QuizController {
     @Operation(summary = "Get all quizzes")
     public ResponseEntity<List<QuizResponseDTO>> getAllQuizzes() {
         return ResponseEntity.ok(quizService.getAllQuizzes());
+    }
+
+    @GetMapping("/paged")
+    @Operation(summary = "Get all quizzes with pagination and filters")
+    public ResponseEntity<PaginatedResponse<QuizResponseDTO>> getPagedQuizzes(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long moduleId,
+            Pageable pageable) {
+        Page<QuizResponseDTO> page = quizService.getPagedQuizzes(search, moduleId, pageable);
+        return ResponseEntity.ok(new PaginatedResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        ));
     }
 
     @PutMapping("/{id}")

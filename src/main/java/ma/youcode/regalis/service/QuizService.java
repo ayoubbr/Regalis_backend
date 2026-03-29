@@ -5,12 +5,17 @@ import ma.youcode.regalis.dto.quiz.QuizResponseDTO;
 import ma.youcode.regalis.dto.quiz.QuizUpdateDTO;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface QuizService {
     QuizResponseDTO createQuiz(QuizCreateDTO dto);
 
     QuizResponseDTO getQuizById(Long id);
 
     List<QuizResponseDTO> getQuizzesByModuleId(Long moduleId);
+
+    Page<QuizResponseDTO> getPagedQuizzes(String search, Long moduleId, Pageable pageable);
 
     List<QuizResponseDTO> getAllQuizzes();
 

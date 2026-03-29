@@ -106,7 +106,7 @@ public class DataInitializer implements CommandLineRunner {
         quiz1.setContent("Why controlling the center is important.");
         quiz1.setDifficulty(1);
         quiz1.setModule(mod1);
-        quiz1.setImageUrl("https://images.unsplash.com/photo-1587888191477-e74ac6bc9c4b");
+        quiz1.setImageUrl("https://media.istockphoto.com/id/1300493081/photo/confusion-concept-with-question-marks-above-a-chess-piece.jpg?s=612x612&w=0&k=20&c=iZWar4NS2hvfOgDmht3c4PC-zrqrfvwYLbkjFqYsngY=");
         quizRepository.save(quiz1);
 
         seedQuestions(quiz1, "Which central squares are most important to control in the opening?", "e4, d4, e5, d5;a1, h1, a8, h8;b2, g2, b7, g7;c3, f3, c6, f6", "e4, d4, e5, d5", "Think about the 4 squares in the very middle of the board.", 50);
@@ -118,7 +118,7 @@ public class DataInitializer implements CommandLineRunner {
         quiz2.setContent("Develop pieces quickly and efficiently.");
         quiz2.setDifficulty(1);
         quiz2.setModule(mod1);
-        quiz2.setImageUrl("https://images.unsplash.com/photo-1619163413327-546fdb903195");
+        quiz2.setImageUrl("https://static.vecteezy.com/system/resources/thumbnails/072/715/921/small/black-pawn-chess-piece-in-focus-with-blurred-wooden-pieces-in-the-background-free-photo.jpeg");
         quizRepository.save(quiz2);
 
         Quiz quiz3 = new Quiz();
