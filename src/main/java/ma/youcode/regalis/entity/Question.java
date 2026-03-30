@@ -22,7 +22,7 @@ public class Question {
     private String text;
 
     @Column(columnDefinition = "TEXT")
-    private String options; // Storing as JSON string for simplicity or comma separated
+    private String options; // Storing for simplicity as String with comma separated
 
     @Column(name = "correct_option_id")
     private String correctOptionId;

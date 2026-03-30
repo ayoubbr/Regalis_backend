@@ -1,6 +1,7 @@
 package ma.youcode.regalis.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import ma.youcode.regalis.entity.User;
 import ma.youcode.regalis.enums.Role;
 import ma.youcode.regalis.payload.request.LoginRequest;
@@ -26,17 +27,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
-    @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
     PasswordEncoder encoder;
-
-    @Autowired
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")

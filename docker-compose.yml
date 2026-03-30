@@ -30,6 +30,23 @@ services:
     networks:
       - regalis_network
 
+  backend:
+    build: .
+    container_name: backend_regalis_app
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=regalis_db
+      - DB_USER=root
+      - DB_PASS=root
+    ports:
+      - "8080:8080"
+    networks:
+      - regalis_network
+
 volumes:
   mysql_data:
 

@@ -1,5 +1,6 @@
 package ma.youcode.regalis.security;
 
+import lombok.AllArgsConstructor;
 import ma.youcode.regalis.security.jwt.AuthEntryPointJwt;
 import ma.youcode.regalis.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,9 @@ import java.util.Collections;
 
 @Configuration
 @EnableMethodSecurity
+@AllArgsConstructor
 public class WebSecurityConfig {
-    @Autowired
-    UserDetailsService userDetailsService;
-
-    @Autowired
+//    UserDetailsService userDetailsService;
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
@@ -83,7 +82,8 @@ public class WebSecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin",
+                "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
