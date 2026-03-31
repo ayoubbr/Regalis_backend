@@ -17,5 +17,6 @@ public interface UserSituationRepository extends JpaRepository<UserSituation, Lo
            "FROM UserSituation us " +
            "WHERE us.isCorrect = true AND us.createdAt >= :start AND us.createdAt <= :end " +
            "GROUP BY us.user.id, us.situation.puzzle.id, us.situation.puzzle.xpReward")
-    List<Object[]> sumPuzzleXpByUserInPeriod(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    List<Object[]> sumPuzzleXpByUserInPeriod(@Param("start") LocalDateTime start,
+                                             @Param("end") LocalDateTime end);
 }

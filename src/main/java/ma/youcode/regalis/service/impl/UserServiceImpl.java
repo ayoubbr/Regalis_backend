@@ -1,14 +1,18 @@
 package ma.youcode.regalis.service.impl;
 
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import ma.youcode.regalis.dto.user.UserCreateDTO;
 import ma.youcode.regalis.dto.user.UserResponseDTO;
 import ma.youcode.regalis.dto.user.UserUpdateDTO;
 import ma.youcode.regalis.entity.User;
+import ma.youcode.regalis.enums.Role;
 import ma.youcode.regalis.exception.EntityNotFoundException;
 import ma.youcode.regalis.mapper.UserMapper;
 import ma.youcode.regalis.repository.UserRepository;
 import ma.youcode.regalis.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,9 +68,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public org.springframework.data.domain.Page<UserResponseDTO> getAllUsers(String search, ma.youcode.regalis.enums.Role role, org.springframework.data.domain.Pageable pageable) {
+    public Page<UserResponseDTO> getAllUsers(String search, Role role,
+                                             Pageable pageable) {
         return userRepository.findAll((root, query, cb) -> {
-            java.util.List<jakarta.persistence.criteria.Predicate> predicates = new java.util.ArrayList<>();
+            List<Predicate> predicates = new ArrayList<>();
 
             if (search != null && !search.isBlank()) {
                 String pattern = "%" + search.toLowerCase() + "%";
@@ -81,7 +87,7 @@ public class UserServiceImpl implements UserService {
                 predicates.add(cb.equal(root.get("role"), role));
             }
 
-            return cb.and(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+            return cb.and(predicates.toArray(new Predicate[0]));
         }, pageable).map(userMapper::toDTO);
     }
 

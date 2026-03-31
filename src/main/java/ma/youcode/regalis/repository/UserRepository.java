@@ -3,7 +3,12 @@ package ma.youcode.regalis.repository;
 import ma.youcode.regalis.entity.User;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,12 +21,12 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     Boolean existsByEmail(String email);
     
-    @org.springframework.data.jpa.repository.Query("SELECT COALESCE(SUM(u.totalXp), 0) FROM User u")
+    @Query("SELECT COALESCE(SUM(u.totalXp), 0) FROM User u")
     Long sumTotalXp();
 
-    long countByLastActiveDateGreaterThanEqual(java.time.LocalDate date);
+    long countByLastActiveDateGreaterThanEqual(LocalDate date);
 
-    java.util.List<User> findTop8ByOrderByCreatedAtDesc();
+    List<User> findTop8ByOrderByCreatedAtDesc();
 
-    long countByCreatedAtBetween(java.time.LocalDateTime start, java.time.LocalDateTime end);
+    long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 }

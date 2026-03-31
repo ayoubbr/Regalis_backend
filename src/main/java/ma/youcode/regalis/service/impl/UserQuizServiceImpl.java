@@ -68,7 +68,7 @@ public class UserQuizServiceImpl implements UserQuizService {
 
                 boolean isCorrect = question.getCorrectOptionId().equals(answerDTO.selectedOptionId());
                 
-                // Update UserQuestion record
+                // Update UserQuestion
                 ma.youcode.regalis.entity.UserQuestion userQuestion = userQuestionRepository
                         .findByUserIdAndQuestionId(user.getId(), question.getId())
                         .orElse(new ma.youcode.regalis.entity.UserQuestion());
@@ -95,8 +95,7 @@ public class UserQuizServiceImpl implements UserQuizService {
         }
 
         // Update User XP logic: (New Score - Old Score)
-        // User requested: "just the new score cause we reset"
-        // This means we always set the user's XP contribution from this quiz to the latest newScore.
+
         int oldScore = progress.getScore() != null ? progress.getScore() : 0;
         int diff = newScore - oldScore;
         if (diff != 0) {

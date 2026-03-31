@@ -40,7 +40,6 @@ public class LeaderboardServiceImpl implements LeaderboardService {
     public List<LeaderboardEntryResponseDTO> getLeaderboard(Period period) {
         List<LeaderboardEntry> entries = leaderboardEntryRepository.findByPeriodOrderByRankAsc(period);
 
-        // Auto-refresh if empty (first access or stale)
         if (entries.isEmpty()) {
             refreshLeaderboard(period);
             entries = leaderboardEntryRepository.findByPeriodOrderByRankAsc(period);
@@ -104,7 +103,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
     }
 
     @Override
-    @Scheduled(fixedRate = 10000 ) // Every 10 seconds / 5 minutes
+    @Scheduled(fixedRate = 10000 ) // Every 10 seconds
     public void refreshAll() {
         log.info("Scheduled leaderboard refresh starting...");
         for (Period period : Period.values()) {
@@ -134,7 +133,7 @@ public class LeaderboardServiceImpl implements LeaderboardService {
             if (xp > 0) xpMap.merge(userId, xp, (a, b) -> a + b);
         }
 
-        // Puzzle XP (correct situations — one entry per distinct puzzle)
+
         List<Object[]> puzzleResults = userSituationRepository.sumPuzzleXpByUserInPeriod(start, end);
         for (Object[] row : puzzleResults) {
             Long userId = (Long) row[0];
